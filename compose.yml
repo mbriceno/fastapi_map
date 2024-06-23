@@ -1,0 +1,32 @@
+networks:
+    fastapi:
+        name: fastapi
+        driver: bridge
+
+services:
+    postgres:
+        image: postgres:latest
+        container_name: postgres
+        ports:
+            - 5434:5432
+        volumes:
+            - .:/code
+        environment:
+            POSTGRES_DB: mapappdb
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 1q2w3e4r5t
+        networks:
+            - fastapi
+    python:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: python
+        ports:
+            - 8000:8000
+        volumes:
+            - .:/code
+        depends_on:
+            - postgres
+        networks:
+            - fastapi

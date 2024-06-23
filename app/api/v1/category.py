@@ -6,11 +6,11 @@ from app.services.category import CategoryService
 
 router = APIRouter(
     prefix="/category",
-    tags=["category"]
+    tags=["category"],
 )
 
 
-@router.post("", status_code=201, response_model=CategoryResponse)
+@router.post("", status_code=201, response_model=CategoryResponse, summary="Create Category")
 def create(
     data: CategoryRequest,
     handler: Annotated[CategoryService, Depends(CategoryService)],
