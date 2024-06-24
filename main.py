@@ -27,5 +27,3 @@ app = FastAPI(
 app.include_router(category.router, prefix="/api/v1")
 app.include_router(location.router, prefix="/api/v1")
 app.include_router(location_category_reviewed.router, prefix="/api/v1")
-
-# terminar de revisar y hacer el query
