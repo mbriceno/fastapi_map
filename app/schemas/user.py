@@ -1,17 +1,16 @@
 from pydantic import BaseModel, Field
 
 
-class LocationBase(BaseModel):
+class UserBase(BaseModel):
     name: str = Field(min_length=1, max_length=120)
-    latitude: float
-    longitude: float
+    email: str = Field(min_length=1, max_length=150)
 
 
-class LocationRequest(LocationBase):
+class UserRequest(UserBase):
     pass
 
 
-class LocationResponse(LocationBase):
+class UserResponse(UserBase):
     id: int
 
     class Config:

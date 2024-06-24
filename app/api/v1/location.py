@@ -5,7 +5,7 @@ from app.services.location import LocationService
 
 
 router = APIRouter(
-    prefix="/location",
+    prefix="/locations",
     tags=["location"]
 )
 

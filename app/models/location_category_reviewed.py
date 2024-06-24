@@ -24,5 +24,14 @@ class LocationCategoryReviewed(Base):
         "Category",
         back_populates="locations"
     )
+    user_id = Column(
+        Integer,
+        ForeignKey('users.id'),
+        primary_key=True
+    )
+    user = relationship(
+        "User",
+        back_populates="reviews"
+    )
     visit = Column(Integer, nullable=False, default=0)
     last_visit = Column(DateTime, nullable=True)

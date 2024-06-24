@@ -4,14 +4,21 @@ from app.config.database import engine
 from app.models.category import Category
 from app.models.location import Location
 from app.models.location_category_reviewed import LocationCategoryReviewed
+from app.models.user import User
 
 
-def initial_seeding():
+def initial_seeding(custom_engine=None):
     """
     Populate database tables defined in the application.
     """
-    with Session(bind=engine) as session:
-        category1 = Category(name="Restaurantes", description="-----*****-----")
+    session_engine = custom_engine if custom_engine else engine
+    with Session(bind=session_engine) as session:
+        member = User(name="Miguel Briceño", email="mbriceno-2024@gmail.com")
+
+        category1 = Category(
+            name="Restaurantes",
+            description="-----*****-----"
+        )
         category2 = Category(
             name="Estaciones de Servicio", description="-----*****-----"
         )
@@ -102,6 +109,7 @@ def initial_seeding():
 
         session.add_all(
             [
+                member,
                 category1,
                 category2,
                 category3,
@@ -134,18 +142,21 @@ def initial_seeding():
                     location_id=location1.id,
                     visit=0,
                     last_visit=None,
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category1.id,
                     location_id=location2.id,
                     visit=0,
                     last_visit=None,
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category2.id,
                     location_id=location3.id,
                     visit=0,
                     last_visit=None,
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category2.id,
@@ -154,6 +165,7 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "06/04/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category3.id,
@@ -162,6 +174,7 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "06/04/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category3.id,
@@ -170,54 +183,61 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "06/04/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category4.id,
                     location_id=location5.id,
                     visit=2,
                     last_visit=datetime.strptime(
-                        "11/04/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "26/05/24 18:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category4.id,
                     location_id=location6.id,
                     visit=3,
                     last_visit=datetime.strptime(
-                        "11/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "26/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category1.id,
                     location_id=location9.id,
                     visit=3,
                     last_visit=datetime.strptime(
-                        "11/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "27/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category1.id,
                     location_id=location10.id,
                     visit=4,
                     last_visit=datetime.strptime(
-                        "15/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "29/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category2.id,
                     location_id=location11.id,
                     visit=4,
                     last_visit=datetime.strptime(
-                        "15/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "05/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category2.id,
                     location_id=location12.id,
                     visit=5,
                     last_visit=datetime.strptime(
-                        "15/05/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "11/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category3.id,
@@ -226,6 +246,7 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "18/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category3.id,
@@ -234,6 +255,7 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "19/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category4.id,
@@ -242,14 +264,16 @@ def initial_seeding():
                     last_visit=datetime.strptime(
                         "19/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
                 LocationCategoryReviewed(
                     category_id=category4.id,
                     location_id=location16.id,
                     visit=7,
                     last_visit=datetime.strptime(
-                        "19/04/24 13:55:26", "%d/%m/%y %H:%M:%S"
+                        "19/06/24 13:55:26", "%d/%m/%y %H:%M:%S"
                     ),
+                    user_id=member.id
                 ),
             ]
         )

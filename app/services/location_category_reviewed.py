@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from typing import List, Optional, Annotated
 from app.repository.location_category_reviewed_repository import (
@@ -49,6 +50,11 @@ class LocationCategoryReviewedService:
 
     def get_all(self) -> List[Optional[ReviewRespose]]:
         return self.review_repo.get_all()
+
+    def get_suggested(self, user_id: int, days_ago: int, results: int):
+        date_days_ago = datetime.now() - timedelta(days=days_ago)
+
+        return self.review_repo.get_suggested(user_id, date_days_ago, results)
 
     def update(self, _id: int) -> ReviewRespose:
         if not self.review_repo.review_exist_by_id(_id):

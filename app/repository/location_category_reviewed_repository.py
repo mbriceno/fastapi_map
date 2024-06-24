@@ -1,5 +1,6 @@
 from datetime import datetime
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from typing import List, Optional, Annotated, Type
 from fastapi import Depends
 from app.models.location_category_reviewed import LocationCategoryReviewed
@@ -9,6 +10,7 @@ from app.schemas.location_category_reviewed import (
 )
 from app.schemas.category import CategoryResponse
 from app.schemas.location import LocationResponse
+from app.schemas.user import UserResponse
 from app.config.database import sess_db
 
 
@@ -66,6 +68,32 @@ class LocationCategoryReviewedRepository:
         self.session.refresh(review)
         return self._map_review_object(review)
 
+    def get_suggested(
+        self,
+        user_id: int,
+        last_reviewed: datetime,
+        limit: int
+    ) -> List[Optional[ReviewResponse]]:
+        print(last_reviewed)
+        reviews = self.session \
+            .query(LocationCategoryReviewed) \
+            .filter(
+                or_(
+                    LocationCategoryReviewed.last_visit > last_reviewed,
+                    LocationCategoryReviewed.visit == 0
+                )
+            )
+
+        if user_id:
+            reviews = reviews.filter(
+                LocationCategoryReviewed.user_id == user_id
+            )
+
+        reviews = reviews.order_by(LocationCategoryReviewed.visit.asc()) \
+            .limit(limit)
+
+        return self._map_review_list(reviews)
+
     @staticmethod
     def _map_review_list(
         reviews: List[Type[LocationCategoryReviewed]]
@@ -91,6 +119,11 @@ class LocationCategoryReviewedRepository:
                 name=r.location.name,
                 latitude=r.location.latitude,
                 longitude=r.location.longitude,
+            ),
+            user=UserResponse(
+                id=r.user.id,
+                name=r.user.name,
+                email=r.user.email,
             ),
             visit=r.visit,
             last_visit=r.last_visit

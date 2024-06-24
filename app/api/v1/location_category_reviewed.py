@@ -10,7 +10,7 @@ from app.services.location_category_reviewed import (
 
 
 router = APIRouter(
-    prefix="/review",
+    prefix="/reviews",
     tags=["review"]
 )
 
@@ -28,6 +28,20 @@ def get_locations(
     handler: Annotated[ReviewService, Depends(ReviewService)]
 ):
     return handler.get_all()
+
+
+@router.get(
+    "/suggested",
+    status_code=200,
+    response_model=List[ReviewResponse]
+)
+def get_suggested(
+    handler: Annotated[ReviewService, Depends(ReviewService)],
+    user_id: int,
+    days_ago: int = 30,
+    page_size: int = 10,
+):
+    return handler.get_suggested(user_id, days_ago, page_size)
 
 
 @router.put("/{_id}", status_code=200, response_model=ReviewResponse)
