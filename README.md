@@ -14,10 +14,11 @@ Development Stack:
 Docker container:
 -----------------
 
-Ejecutar el proyecto en Docker:
+El proyecto puede ser ejecutado en Docker, tiene el Dockerfile, así como también el compose.yml, para orquestar todo el proyecto:
 
 ```sh
-# Build
+# Build con docker compose
+# Recuerde renombrar el archivo .env.example a .env
 docker compose up -d
 ```
 
