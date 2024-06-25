@@ -10,7 +10,12 @@ router = APIRouter(
 )
 
 
-@router.post("", status_code=201, response_model=CategoryResponse, summary="Create Category")
+@router.post(
+    "",
+    status_code=201,
+    response_model=CategoryResponse,
+    summary="Create a Category"
+)
 def create(
     data: CategoryRequest,
     handler: Annotated[CategoryService, Depends(CategoryService)],
@@ -18,14 +23,23 @@ def create(
     return handler.create(data)
 
 
-@router.get("", status_code=200, response_model=List[CategoryResponse])
+@router.get(
+    "",
+    status_code=200,
+    response_model=List[CategoryResponse],
+    summary="Return a list of Category schemas"
+)
 def get_categories(
     handler: Annotated[CategoryService, Depends(CategoryService)]
 ):
     return handler.get_all()
 
 
-@router.delete("/{_id}", status_code=204)
+@router.delete(
+    "/{_id}",
+    status_code=204,
+    summary="Delete a Category"
+)
 def delete_category(
     _id: int,
     handler: Annotated[CategoryService, Depends(CategoryService)]
@@ -33,7 +47,12 @@ def delete_category(
     return handler.delete(_id)
 
 
-@router.put("/{_id}", status_code=200, response_model=CategoryResponse)
+@router.put(
+    "/{_id}",
+    status_code=200,
+    response_model=CategoryResponse,
+    summary="Updata all fields in a Category"
+)
 def update_category(
     _id: int,
     data: CategoryRequest,

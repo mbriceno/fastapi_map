@@ -21,6 +21,15 @@ app = FastAPI(
     debug=True,
     title=settings.app_name,
     description=settings.app_description,
+    version="1.0.0",
+    contact={
+        "name": "Miguel Briceño",
+        "url": "https://www.linkedin.com/in/miguel-briceno-ve/",
+    },
+    license={
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
     lifespan=lifespan
 )
 
